@@ -15,6 +15,18 @@ Simple ways to make admin customizations for WordPress. You know all that brain 
 
 * On [GitHub](https://github.com/upstatement/zoneboard)
 
+### Add a column to an admin page!
+
+###### `Jigsaw::add_column($post_type, $column_label, $callback_function, $order = 10);`
+
+```php
+Jigsaw::add_column('slides', 'Preview', function($pid){
+  	$data = array();
+	$data['post'] = new TimberPost($pid);
+	Timber::render('admin/slide-table-preview.twig', $data);
+}, 5);
+```
+
 
 == Installation ==
 
