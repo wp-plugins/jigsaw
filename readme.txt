@@ -27,6 +27,106 @@ Jigsaw::add_column('slides', 'Preview', function($pid){
 }, 5);
 `
 
+`
+Jigsaw::add_column(array('slides', 'post'), 'Preview', function($pid){
+  	$data = array();
+	$data['post'] = new TimberPost($pid);
+	Timber::render('admin/slide-table-preview.twig', $data);
+});
+`
+
+### Remove a column from the admin
+
+###### `Jigsaw::remove_column($post_types, $column_slug);`
+
+`
+Jigsaw::remove_column('slides', 'author');
+`
+
+`
+Jigsaw::remove_column(array('slides', 'post'), 'author');
+`
+
+### Add something to the admin bar
+
+###### `Jigsaw::add_toolbar_item($label, $url_or_callback_function);`
+`
+Jigsaw::add_toolbar_item('Clear Cache', function(){
+	$total_cache->flush_all();
+});
+`
+
+### Add a dropdown
+
+###### `Jigsaw::add_toolbar_group($label, $items);`
+`
+$optionOne = new stdClass();
+$optionOne->label = 'All Caches';
+$optionOne->action = function(){
+	$total_cache->flush_all();
+};
+$optionTwo = new stdClass();
+$optionTwo->label = 'Page Cache';
+$optionTwo->action = function(){
+	$total_cache->flush_page_cache();
+};
+$optionThree = array('Home', 'http://localhost');
+Jigsaw::add_toolbar_group('Clear Cache', array($optionOne, $optionTwo, $optionThree));
+`
+
+### Show an admin notice
+
+###### `Jigsaw::show_notice($message, $level = 'updated');`
+
+`
+Jigsaw::show_notice('Cache has been flushed', 'updated');
+`
+...or
+`
+Jigsaw::show_notice('Error flushing cache, is the plugin activated?', 'error');
+`
+
+### Add a CSS file to the admin
+
+###### `Jigsaw::add_css($css_file);`
+
+`
+Jigsaw::add_css('css/my-admin-style.css');
+`
+
+#JigsawPermalinks
+
+### Set the base of the author permalink
+
+###### `JigsawPermalinks::set_author_base($base_string);`
+
+`
+JigsawPermalinks::set_author_base('writers');
+`
+After this you have to reset permalinks to see it working.
+
+### Remove a custom post type permalink
+
+###### `JigsawPermalinks::remove_permalink_slug($custom_post_type)`;
+
+`
+JigsawPermalinks::remove_permalink_slug('event');
+`
+
+or
+
+`
+JigsawPermalinks::remove_permalink_slug(array('event', 'book', 'my_other_cpt'));
+`
+
+### Set a custom permalink
+###### `JigsawPermalinks::set_permalink($post_type, $structure);`
+
+`
+JigsawPermalinks::set_permalink('gallery', '/galleries/%year%/%gallery%');
+`
+
+
 
 == Installation ==
 
